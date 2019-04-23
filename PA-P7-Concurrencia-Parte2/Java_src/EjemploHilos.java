@@ -1,9 +1,16 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pa.paralelizacion;
+
 
 // Java program to demonstrate 
 // method calls of Thread class 
-package generic; 
 class Helper implements Runnable 
 { 
+    @Override
     public void run() 
     { 
         try
@@ -16,15 +23,16 @@ class Helper implements Runnable
         } 
 } 
   
-public class Test implements Runnable 
+public class EjemploHilos implements Runnable 
 { 
+    @Override
     public void run() 
     { 
         //thread run() method 
     } 
     public static void main(String[] args) 
     { 
-        Test obj = new Test(); 
+        EjemploHilos obj = new EjemploHilos(); 
         Helper obj2 = new Helper(); 
               
         Thread thread1 = new Thread(obj); 
@@ -57,7 +65,7 @@ public class Test implements Runnable
         thread2 = new Thread(obj2); 
         thread2.start(); 
         thread2.interrupt(); 
-        System.out.println("Is thread2 interrupted? " + thread2.interrupted() ); 
+        System.out.println("Is thread2 interrupted? " + Thread.interrupted() ); 
         System.out.println("Is thread2 alive? " + thread2.isAlive()); 
               
         thread1 = new Thread(obj); 
@@ -73,7 +81,6 @@ public class Test implements Runnable
         }  
         catch (InterruptedException e)  
         { 
-            e.printStackTrace(); 
         } 
               
         // setting the name of thread1 
@@ -83,7 +90,7 @@ public class Test implements Runnable
         // setting the priority of thread1 
         thread1.setPriority(5); 
               
-        thread2.yield(); 
+        Thread.yield(); 
               
         // fetching the string representation of thread1 
         System.out.println(thread1.toString()); 
@@ -104,11 +111,11 @@ public class Test implements Runnable
               
         ClassLoader classLoader = thread1.getContextClassLoader(); 
         System.out.println(classLoader.toString()); 
-        System.out.println(thread1.getDefaultUncaughtExceptionHandler()); 
+        System.out.println(Thread.getDefaultUncaughtExceptionHandler()); 
           
-        thread2.setUncaughtExceptionHandler(thread1.getDefaultUncaughtExceptionHandler()); 
+        thread2.setUncaughtExceptionHandler(Thread.getDefaultUncaughtExceptionHandler()); 
         thread1.setContextClassLoader(thread2.getContextClassLoader()); 
-        thread1.setDefaultUncaughtExceptionHandler(thread2.getUncaughtExceptionHandler()); 
+        Thread.setDefaultUncaughtExceptionHandler(thread2.getUncaughtExceptionHandler()); 
           
         thread1 = new Thread(obj); 
         StackTraceElement[] trace = thread1.getStackTrace(); 
@@ -121,10 +128,9 @@ public class Test implements Runnable
         ThreadGroup grp = thread1.getThreadGroup(); 
         System.out.println("ThreadGroup to which thread1 belongs " +grp.toString()); 
         System.out.println(thread1.getUncaughtExceptionHandler()); 
-        System.out.println("Does thread1 holds Lock? " + thread1.holdsLock(obj2)); 
+        System.out.println("Does thread1 holds Lock? " + Thread.holdsLock(obj2)); 
               
-              
-        Thread.dumpStack(); 
-              
+                           
     } 
 } 
+
