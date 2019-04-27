@@ -1,0 +1,87 @@
+package Práctica7;
+
+import java.util.concurrent.*;
+
+public class Barberia{
+
+    public static Semaphore barberoListo = new Semaphore(0, true);
+    public static Semaphore clientes = new Semaphore(0, true);
+    public static Semaphore sillasAccesibles = new Semaphore(1, true);
+    
+    public static final int N_SILLAS = 5;
+    public static int sillasLibres = N_SILLAS;
+
+    class Cliente extends Thread {
+        int iD;
+
+        public Cliente(int i) {
+            iD = i;
+        }
+
+        public void run() {
+            try {
+                sillasAccesibles.acquire();
+                if (sillasLibres > 0) {
+                    System.out.println("El cliente " + this.iD + " se sienta");
+                    sillasLibres--;
+                    clientes.release();
+                    sillasAccesibles.release();
+                    try {
+                        barberoListo.acquire();
+                        this.seCortaElPelo();
+                    }catch (InterruptedException ex) {}
+                }else {
+                    System.out.println("No hay sitio. El cliente " + this.iD + " se va");
+                    sillasAccesibles.release();
+                }
+            } catch (InterruptedException ex) {}
+        }
+
+        public void seCortaElPelo() {
+            System.out.println("Cliente " + this.iD + " se corta el pelo");
+            try {
+                sleep(5050);
+            } catch (InterruptedException ex) { }
+        }
+    }
+
+    class Barbero extends Thread {
+        public void run() {
+            while (true) {
+                try {
+                    clientes.acquire();
+                    sillasAccesibles.acquire();
+                    sillasLibres++;
+                    barberoListo.release();
+                    sillasAccesibles.release();
+                    this.cortaPelo();
+                } catch (InterruptedException ex) {}
+            }
+        }
+
+        public void cortaPelo() {
+            System.out.println("El barbero esta cortando el pelo");
+            try {
+                sleep(5000);
+            } catch (InterruptedException ex) {}
+        }
+    }
+
+    public static void main(String args[]) {
+        Barberia barberia = new Barberia();
+        barberia.abrir();
+    }
+
+    public void abrir() {
+        Barbero barbero = new Barbero();
+        barbero.start();
+
+        for (int i = 1; i <= 15; i++) {
+            Cliente cliente = new Cliente(i);
+            cliente.start();
+            try{
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {}
+        }
+    }
+}
