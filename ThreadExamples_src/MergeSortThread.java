@@ -70,12 +70,13 @@ public class MergeSortThread extends RecursiveTask<Integer>{
 		}
 
 		private void mezcla(Integer[] a, Integer[] auxiliar, int inf, int medio, int sup){
-	        int i=0, 
-	        int leftPos=0, rightPos=0;
-	        int leftSize = left.size(), rightSize = right.size();
+	        int i = 0, 
+	        int leftPos = 0, rightPos = 0;
+	        int n1 = medio - inf +
+	         ;
 	       	int[] result;
 
-	        while (leftPos < leftSize && rightPos < rightSize)
+	        while (leftPos < inf && rightPos < sup)
 	            result[i++] = (left.result[leftPos] <= right.result[rightPos])
 	                    ? left.result[leftPos++]
 	                    : right.result[rightPos++];
@@ -91,5 +92,4 @@ public class MergeSortThread extends RecursiveTask<Integer>{
 
 	}
     
-    
-}
+
