@@ -239,7 +239,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <Component id="AboutButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="478" max="32767" attributes="0"/>
+                  <EmptySpace pref="492" max="32767" attributes="0"/>
                   <Component id="CloseButton" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -267,7 +267,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="AboutButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jButton1"/>
+            <Property name="text" type="java.lang.String" value="About"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AboutButtonActionPerformed"/>

@@ -117,7 +117,7 @@ public class GUIExample extends javax.swing.JFrame {
             }
         });
 
-        AboutButton.setText("jButton1");
+        AboutButton.setText("About");
         AboutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AboutButtonActionPerformed(evt);
@@ -130,7 +130,7 @@ public class GUIExample extends javax.swing.JFrame {
             PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLayout.createSequentialGroup()
                 .addComponent(AboutButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 478, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 492, Short.MAX_VALUE)
                 .addComponent(CloseButton))
         );
         PanelLayout.setVerticalGroup(
@@ -435,7 +435,8 @@ public class GUIExample extends javax.swing.JFrame {
     }//GEN-LAST:event_SaveButtonActionPerformed
 
     private void ColorChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColorChooserActionPerformed
-
+       //string text = area.getText();
+        //htmlLabel.setText("<html>" + text + "</html<")
  
     }//GEN-LAST:event_ColorChooserActionPerformed
 
@@ -487,7 +488,7 @@ public class GUIExample extends javax.swing.JFrame {
 
         JLabel l1 = new JLabel("Autor: Ruben Cherif Narvaez");
         JLabel l2 = new JLabel("Version: 3.1.2");
-        ImageIcon image = new ImageIcon("/home/alumno/Escritorio/mapa.jpg"); //imports the image
+        ImageIcon image = new ImageIcon("C:\\Users\\User\\Desktop\\Temp\\JavaExamples\\image.jpg"); //imports the image
         JLabel l3 = new JLabel(image);
         image.getIconHeight();
         image.getIconWidth();
