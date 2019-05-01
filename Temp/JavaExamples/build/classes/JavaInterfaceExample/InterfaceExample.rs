@@ -1,3 +1,0 @@
-JavaInterfaceExample.Animal
-JavaInterfaceExample.InterfaceExample
-JavaInterfaceExample.Pig
