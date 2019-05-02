@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package JavaGuiExample;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.font.TextAttribute;
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,8 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.event.UndoableEditEvent;
-import javax.swing.event.UndoableEditListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
@@ -40,30 +30,21 @@ import javax.swing.undo.UndoManager;
 
 /**
  *
- * @author User
+ * @author rabiixx
  */
 public class GUIExample extends javax.swing.JFrame {
 
     protected JTextArea textArea;
+    private final UndoManager undoManager;
     JFrame f = new JFrame();
     JDialog dialog = new JDialog();
-    JTextArea textArea1 = new JTextArea();
-    //private UndoManager undoMgr__;
-    UndoManager editManager = new UndoManager();
-    Graphics g;
-    
-    
-    private class UndoEditListener implements UndoableEditListener {
-	@Override
-	public void undoableEditHappened(UndoableEditEvent e) {
-            editManager.addEdit(e.getEdit()); // remember the edit
-	}
-    }
 
     public GUIExample() {
+        this.textArea = new JTextArea();
         initComponents();
+        undoManager = new UndoManager();
+        textArea.getDocument().addUndoableEditListener(undoManager);
         setLocationRelativeTo(null);
-          
     }
 
     @SuppressWarnings("unchecked")
@@ -71,6 +52,7 @@ public class GUIExample extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         Panel = new javax.swing.JPanel();
         CloseButton = new javax.swing.JButton();
         AboutButton = new javax.swing.JButton();
@@ -89,7 +71,10 @@ public class GUIExample extends javax.swing.JFrame {
         CopyButton = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         PasteButton = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
         UndoButton = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
+        RedoButton = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         BoldButton = new javax.swing.JMenuItem();
         UnderlineButton = new javax.swing.JMenuItem();
@@ -100,6 +85,8 @@ public class GUIExample extends javax.swing.JFrame {
         PanelColor = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
+
+        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -213,6 +200,7 @@ public class GUIExample extends javax.swing.JFrame {
             }
         });
         EditMenu.add(PasteButton);
+        EditMenu.add(jSeparator6);
 
         UndoButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         UndoButton.setText("Undo");
@@ -222,13 +210,15 @@ public class GUIExample extends javax.swing.JFrame {
             }
         });
         EditMenu.add(UndoButton);
-        UndoButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                if (editManager.canRedo()) {
-                    editManager.redo();
-                }
+        EditMenu.add(jSeparator7);
+
+        RedoButton.setText("Redo");
+        RedoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RedoButtonActionPerformed(evt);
             }
         });
+        EditMenu.add(RedoButton);
 
         MenuBar.add(EditMenu);
 
@@ -317,7 +307,7 @@ public class GUIExample extends javax.swing.JFrame {
     private void NewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewButtonActionPerformed
         
         /* Creamos area de texto en blanco */
-        textArea = new JTextArea();
+        //textArea = new JTextArea();
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setBounds(52, 76, 360, 156);
@@ -456,14 +446,6 @@ public class GUIExample extends javax.swing.JFrame {
         System.out.println(textArea.getText());
     }//GEN-LAST:event_PrintButtonActionPerformed
 
-    private void UndoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UndoButtonActionPerformed
-           
-        /*if (editManager.canRedo()) {
-            editManager.redo();
-        }  */ 
-        
-    }//GEN-LAST:event_UndoButtonActionPerformed
-
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
         Frame JFrame;
             // create a dialog Box 
@@ -481,7 +463,7 @@ public class GUIExample extends javax.swing.JFrame {
 
         JLabel l1 = new JLabel("Autor: Ruben Cherif Narvaez");
         JLabel l2 = new JLabel("Version: 3.1.2");
-        ImageIcon image = new ImageIcon("C:\\Users\\User\\Desktop\\Temp\\JavaExamples\\image.jpg"); //imports the image
+        ImageIcon image = new ImageIcon("/home/alumno/Escritorio/Repos/ProgramacionAvanzada/PA-P6-Interfaces/JavaExamples/image.jpg"); //imports the image
         JLabel l3 = new JLabel(image);
         image.getIconHeight();
         image.getIconWidth();
@@ -517,6 +499,14 @@ public class GUIExample extends javax.swing.JFrame {
     private void ItalicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItalicButtonActionPerformed
         textArea.setFont(new Font("Tahoma", Font.ITALIC, 14));
     }//GEN-LAST:event_ItalicButtonActionPerformed
+
+    private void UndoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UndoButtonActionPerformed
+        undoManager.undo();
+    }//GEN-LAST:event_UndoButtonActionPerformed
+
+    private void RedoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RedoButtonActionPerformed
+        undoManager.redo();
+    }//GEN-LAST:event_RedoButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -572,15 +562,19 @@ public class GUIExample extends javax.swing.JFrame {
     private javax.swing.JMenuItem PanelColor;
     private javax.swing.JMenuItem PasteButton;
     private javax.swing.JMenuItem PrintButton;
+    private javax.swing.JMenuItem RedoButton;
     private javax.swing.JMenuItem SaveButton;
     private javax.swing.JMenuItem UnderlineButton;
     private javax.swing.JMenuItem UndoButton;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
     // End of variables declaration//GEN-END:variables
 }
